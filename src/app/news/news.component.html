@@ -1,3 +1,20 @@
-<p>
-  news works!
-</p>
+<div class="container" id="news-articles">
+  <div *ngIf="newsArticles?.length > 0; else: noNewsAvailable">
+    <div *ngFor="let article of newsArticles">
+      <mat-card class="single-news">
+        <mat-card-header>
+          <mat-card-title>{{ article.title }}</mat-card-title>
+        </mat-card-header>
+        <img
+          mat-card-image
+          src="{{article.urlToImage}}"
+          onError="this.src='/assets/images/blank.png';"
+        />
+        <mat-card-content>
+          <p>{{ article.description }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div> 
+  <ng-template #noNewsAvailable> <h2>No news available</h2> </ng-template>
+</div>

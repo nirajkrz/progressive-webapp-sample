@@ -8,7 +8,7 @@ import { NewsService } from './news.service';
 })
 export class NewsComponent implements OnInit {
 
-  newsData: any;
+  newsArticles: any;
   constructor( private newsService: NewsService) { }
 
   ngOnInit() {
@@ -16,8 +16,10 @@ export class NewsComponent implements OnInit {
   }
 
   private getNews() {
-    this.newsService.getTopHeadLines().subscribe((data) => {
-      this.newsData = data;
+    this.newsService.getTopHeadLines().subscribe((data: any) => {
+      if(!!data){
+        this.newsArticles = data.articles;
+      }
     });
   }
 
