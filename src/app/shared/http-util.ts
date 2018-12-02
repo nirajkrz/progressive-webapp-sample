@@ -20,7 +20,7 @@ export class HttpUtil {
   ): Observable<T> => {
     return <Observable<T>>observable.pipe(
       map((response: any) => {
-        if (response.status === 200) {
+        if (response.status === 'ok' || response.status === 200) {
           return <T>response;
         } else {
           throw response;

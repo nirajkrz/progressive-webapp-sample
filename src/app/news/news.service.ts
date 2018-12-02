@@ -1,36 +1,44 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Response } from "@angular/http";
-import { Observable, of } from "rxjs";
-import { ServerResponse } from "./server-response.interface";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { HttpUtil } from "../shared/http-util";
+import { AppHttpConfig } from "../shared/http-config";
 
 @Injectable({
   providedIn: "root"
 })
 export class NewsService {
-  baseUrl = "https://newsapi.org/v2/";
-  private apiKey: string = "XSMjQ1ZjcxYjA4MTA3NDdmMzlkNWFiMzVkMmRkYzI5Y2EM54=";
+  config = new AppHttpConfig();
   constructor(private httpClient: HttpClient) {}
 
-  private getUsableKey(): string {
-    return atob(this.apiKey.split("XS")[1].split("M54")[0] + "=");
-  }
-
-  getNews(): Observable<any> {
-    const headers = this.headers;
+  getTopHeadLines() {
+    const params = new HttpParams().set("country", "us");
+    const headers = this.config.httpOptions.headers;
     return this.httpClient
-      .get(`${this.baseUrl}top-headlines`, {
-        headers
+      .get(`${this.config.baseUrl}top-headlines`, {
+        headers,
+        params
       })
       .pipe(HttpUtil.mapAndCatchClient);
   }
 
-  get headers() {
-    const headers = new HttpHeaders()
-      .set("Content-Type", "application/json")
-      .set("X-Api-Key", this.getUsableKey());
-
-    return headers;
+  getNewsBySource(source) {
+    const params = new HttpParams().set("sources", source);
+    const headers = this.config.httpOptions.headers;
+    return this.httpClient
+      .get(`${this.config.baseUrl}top-headlines`, {
+        headers,
+        params
+      })
+      .pipe(HttpUtil.mapAndCatchClient);
+  }
+  getSources() {
+    const headers = this.config.httpOptions.headers;
+    return this.httpClient
+      .get(
+        `${this.config.baseUrl}
+      sources`,
+        { headers }
+      )
+      .pipe(HttpUtil.mapAndCatchClient);
   }
 }

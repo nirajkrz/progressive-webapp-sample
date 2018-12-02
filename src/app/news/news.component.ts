@@ -16,7 +16,7 @@ export class NewsComponent implements OnInit {
   }
 
   private getNews() {
-    this.newsService.getNews().subscribe((data) => {
+    this.newsService.getTopHeadLines().subscribe((data) => {
       this.newsData = data;
     });
   }
