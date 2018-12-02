@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if (this.swUpdate.isEnabled) {
       this.swUpdate.available.subscribe(() => {
-        if (confirm("New version available. Load New Version?")) {
+        if (confirm("A New version of site is available. Load New Version?")) {
           window.location.reload();
         }
       });
